@@ -3,27 +3,29 @@ import "./Person.css";
 
 class Person extends Component {
   state = {
-    inputValue: "",
-    inputArray: []
+    inputValue: "", //input value
+    inputArray: [] // Array to store the value of input
   };
 
   updateInput = e => {
     this.setState({
-      inputValue: e.target.value
+      inputValue: e.target.value //watching the keystroke of input
     });
+    console.log(this.state.inputValue) 
   };
 
+  //Adding Items on Click
   addItem = () => {
     let newValue = this.state.inputValue;
     let newArray = this.state.inputArray;
 
     if (newArray === newValue) {
-      console.log("Exist");
+      console.log("Exist");   // this part doesnt work
     } else {
-      newArray.push(newValue);
+      newArray.push(newValue);  //Pushing the typed value into an array
     }
     this.setState({
-      inputArray: newArray
+      inputArray: newArray //Storing the new array into the real array
     });
     console.log(this.state.inputArray);
   };
@@ -47,6 +49,7 @@ class Person extends Component {
         <br />
 
         <ul className="list-group col-3">
+        {/* Using map function to loop throught the array and displaying them in the li tag */}
           {this.state.inputArray.map((value, key) => {
             return (
               <li className="list-group-item items" key={key}>
