@@ -11,7 +11,7 @@ class Person extends Component {
     this.setState({
       inputValue: e.target.value //watching the keystroke of input
     });
-    console.log(this.state.inputValue) 
+    // console.log(this.state.inputValue);
   };
 
   //Adding Items on Click
@@ -19,15 +19,26 @@ class Person extends Component {
     let newValue = this.state.inputValue;
     let newArray = this.state.inputArray;
 
-    if (newArray === newValue) {
-      console.log("Exist");   // this part doesnt work
+    if (newArray.includes(newValue)) {
+      console.log("Exist"); // Item exist => check console
+      return false;
     } else {
-      newArray.push(newValue);  //Pushing the typed value into an array
+      newArray.push(newValue); //Pushing the typed value into an array
+      this.setState({
+        inputArray: newArray //Storing the new array into the real array
+      });
     }
-    this.setState({
-      inputArray: newArray //Storing the new array into the real array
-    });
+
     console.log(this.state.inputArray);
+  };
+
+  deletItem = key => {
+    let newArray = this.state.inputArray;
+    newArray.splice(key, 1);
+    this.setState({
+      inputArray: newArray
+    });
+    console.log(key);
   };
 
   render() {
@@ -49,12 +60,17 @@ class Person extends Component {
         <br />
 
         <ul className="list-group col-3">
-        {/* Using map function to loop throught the array and displaying them in the li tag */}
+          {/* Using map function to loop through the array and displaying them in the li tag */}
           {this.state.inputArray.map((value, key) => {
             return (
               <li className="list-group-item items" key={key}>
                 <span className="float-left">{value}</span>
-                <button className="btn btn-danger float-right">X</button>
+                <button
+                  className="btn btn-danger float-right"
+                  onClick={() => this.deletItem(key)}
+                >
+                  X
+                </button>
               </li>
             );
           })}
