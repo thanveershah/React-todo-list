@@ -4,7 +4,9 @@ import "./Person.css";
 class Person extends Component {
   state = {
     inputValue: "", //input value
-    inputArray: [] // Array to store the value of input
+    inputArray: [], // Array to store the value of input
+    ItemExist: false,
+    itemAdded: false
   };
 
   updateInput = e => {
@@ -20,10 +22,18 @@ class Person extends Component {
     let newArray = this.state.inputArray;
 
     if (newArray.includes(newValue)) {
+      this.setState({
+        itemAdded: false,
+        ItemExist: true
+      });
       console.log("Exist"); // Item exist => check console
       return false;
     } else {
       newArray.push(newValue); //Pushing the typed value into an array
+      this.setState({
+        ItemExist: false,
+        itemAdded: true
+      });
       this.setState({
         inputArray: newArray //Storing the new array into the real array
       });
@@ -57,6 +67,12 @@ class Person extends Component {
             Add
           </button>
         </div>
+        <p className="text-danger">
+          {this.state.ItemExist ? "Item Already Exist" : " "}
+        </p>
+        <p className="text-success">
+          {this.state.itemAdded ? "Item Added Successfuly" : " "}
+        </p>
         <br />
 
         <ul className="list-group col-3">
